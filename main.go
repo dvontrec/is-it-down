@@ -23,9 +23,10 @@ func main() {
 		// Sets up a new go routine to call the checkline function
 		go checkLink(link, c)
 	}
-	// Loops through the number of links to check for a response from the channels
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c)
+	// Loops through the links infinitly whenever a value is received
+	for {
+		// calls the check link function with the link again
+		go checkLink(<-c, c)
 	}
 }
 
@@ -37,11 +38,11 @@ func checkLink(link string, c chan string) {
 		// Print that the link may be down
 		fmt.Println(link, "Might be down")
 		// Sends message to channel
-		c <- "Might be down I think"
+		c <- link
 		// return
 		return
 	}
 	// print that the link os up
 	fmt.Println(link, "Is up")
-	c <- "Yup, its up"
+	c <- link
 }
