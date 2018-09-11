@@ -23,10 +23,10 @@ func main() {
 		// Sets up a new go routine to call the checkline function
 		go checkLink(link, c)
 	}
-	// Loops through the links infinitly whenever a value is received
-	for {
+	// Loops through the links infinitly whenever a value is received from the channel
+	for l := range c {
 		// calls the check link function with the link again
-		go checkLink(<-c, c)
+		go checkLink(l, c)
 	}
 }
 
